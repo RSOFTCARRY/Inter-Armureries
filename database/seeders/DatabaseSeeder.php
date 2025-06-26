@@ -12,12 +12,21 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void
-    {
-        // User::factory(10)->create();
-
-        User::factory()->create([
+{
+    // Crée un utilisateur test seulement s'il n'existe pas déjà
+    \App\Models\User::firstOrCreate(
+        ['email' => 'test@example.com'],
+        [
             'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-    }
+            'password' => bcrypt('password'), // ou ce que tu veux
+        ]
+    );
+
+    // Exécute le seeder des articles
+    $this->call([
+        ArticleSeeder::class,
+    ]);
+}
+
+
 }

@@ -4,19 +4,51 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Article;
-use Illuminate\Support\Str;
 
 class ArticleSeeder extends Seeder
 {
     public function run(): void
     {
-        // Exemple de 9 articles fictifs
-        for ($i = 1; $i <= 9; $i++) {
-            Article::create([
-                'nom' => "Article $i",
-                'description' => "Description de l'article $i. C'est un excellent produit.",
-                'image' => 'default.jpg', // une image par défaut à placer dans storage/app/public/
-            ]);
-        }
+        Article::create([
+            'nom' => 'HK MR308',
+            'description' => 'Carabine de haute précision pour le tir longue distance.',
+            'prix' => 2599.99,
+            'image' => 'articles/hk-mr308.jpg',
+        ]);
+
+        Article::create([
+            'nom' => 'Glock 17',
+            'description' => 'Pistolet semi-automatique très répandu, calibre 9mm.',
+            'prix' => 649.00,
+            'image' => 'articles/glock-17.jpg',
+        ]);
+
+        Article::create([
+            'nom' => 'Benelli M4',
+            'description' => 'Fusil à pompe semi-automatique calibre 12, utilisé par les forces spéciales.',
+            'prix' => 1890.50,
+            'image' => 'articles/benelli-m4.jpg',
+        ]);
+
+        Article::create([
+            'nom' => 'HK MR308',
+            'description' => 'Carabine de haute précision pour le tir longue distance.',
+            'prix' => 3499.99,
+            'image' => 'articles/hk-mr308.jpg',
+        ]);
+
+        Article::create([
+            'nom' => 'Glock 17 Gen5',
+            'description' => 'Pistolet semi-automatique fiable et moderne.',
+            'prix' => 689.00,
+            'image' => 'articles/glock-17.jpg',
+        ]);
+
+        Article::create([
+            'nom' => 'Benelli M4',
+            'description' => 'Fusil à pompe semi-automatique militaire.',
+            'prix' => 1890.00,
+            'image' => 'articles/benelli-m4.jpg',
+        ]);
     }
 }

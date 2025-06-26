@@ -10,27 +10,41 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisteredUserController extends Controller
 {
+    /**
+     * Affiche le formulaire d'inscription.
+     */
     public function create()
     {
         return view('auth.register');
     }
 
+    /**
+     * Traite l'inscription d'un nouvel utilisateur professionnel.
+     */
     public function store(Request $request)
     {
-        $request->validate([
+        // Validation des données
+        $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', 'min:8'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'siret' => ['required', 'string', 'size:14', 'unique:users,siret'], // 14 caractères stricts
+            'sia' => ['required', 'string', 'max:255', 'unique:users,sia'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
+        // Création utilisateur
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'siret' => $validated['siret'],
+            'sia' => $validated['sia'],
+            'password' => Hash::make($validated['password']),
         ]);
 
+        // Connexion automatique
         Auth::login($user);
 
-        return redirect('/dashboard'); // ou la page d'accueil connectée
+        // Redirection vers dashboard
+        return redirect()->route('dashboard');
     }
 }

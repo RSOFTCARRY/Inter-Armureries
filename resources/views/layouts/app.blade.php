@@ -30,8 +30,8 @@
             <span class="font-bold text-lg">Inter Armureries</span>
         </div>
         <div class="flex items-center space-x-4">
-            <a href="#" class="hover:underline">Connexion</a>
-            <a href="#" class="hover:underline">S'enregistrer</a>
+            <a href="{{ route('login') }}" class="hover:underline">Connexion</a>
+            <a href="{{ route('register') }}" class="hover:underline">S'enregistrer</a>
         </div>
     </nav>
 
