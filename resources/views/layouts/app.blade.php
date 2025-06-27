@@ -8,7 +8,7 @@
 </head>
 <body class="bg-white text-black">
 
-    <!-- Bandeau Vert (pleine largeur) -->
+    <!-- Bandeau Vert -->
     <div class="w-full bg-[#0D5037] text-white px-4 py-2 flex items-center justify-between flex-wrap">
         <div class="w-full md:w-1/3 text-sm md:text-base">
             <p>Bienvenue sur Inter Armureries</p>
@@ -23,62 +23,74 @@
         </div>
     </div>
 
-    <!-- Navbar Noire (pleine largeur) -->
-    <nav class="w-full bg-black text-white flex items-center justify-between px-4 py-2">
+    <!-- Navbar Noire -->
+    <nav class="w-full bg-black text-white px-4 py-2 flex flex-wrap items-center justify-between">
         <div class="flex items-center space-x-2">
-            <img src="{{ asset('logo.png') }}" alt="Logo" class="h-8">
+            <img src="{{ asset('logo.png') }}" alt="Logo Inter Armureries" class="h-8">
             <span class="font-bold text-lg">Inter Armureries</span>
         </div>
+
         <div class="flex items-center space-x-4">
-            <a href="{{ route('login') }}" class="hover:underline">Connexion</a>
-            <a href="{{ route('register') }}" class="hover:underline">S'enregistrer</a>
+            @guest
+                <a href="{{ route('login') }}" class="hover:underline">Connexion</a>
+                <a href="{{ route('register') }}" class="hover:underline">S'enregistrer</a>
+            @endguest
+
+            @auth
+                <a href="{{ route('favorites.index') }}" class="text-white hover:underline flex items-center">
+                    <img src="{{ asset('images/favorieBigFull.png') }}" alt="Favoris" class="w-6 h-6 mr-1">
+                    Mes Favoris
+                </a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="hover:underline">Déconnexion</button>
+                </form>
+            @endauth
         </div>
     </nav>
 
-    <!-- Corps principal en flex horizontal -->
+    <!-- Structure principale -->
     <div class="flex w-full min-h-screen">
 
-        <!-- Colonne gauche (sidebar) -->
+        <!-- Colonne gauche -->
         <aside class="w-[280px] bg-white p-4 flex justify-center items-start">
             <div class="w-full max-w-[240px] bg-black text-white p-4 rounded">
                 @yield('sidebar')
             </div>
         </aside>
 
-        <!-- Colonne centrale (contenu principal, flex-auto pour largeur fluide) -->
+        <!-- Colonne centrale -->
         <main class="flex-auto px-4 py-6">
             @yield('content')
         </main>
 
-        <!-- Colonne droite (pubs) -->
+        <!-- Colonne droite -->
         <aside class="w-[280px] bg-white p-4">
             @yield('pubs')
         </aside>
     </div>
 
-    <!-- Footer (aligné à la colonne centrale) -->
-<div class="flex">
-    <div class="w-[280px]"></div> <!-- espace gauche -->
-    
-    <footer class="flex-auto bg-black text-white text-sm mt-4 px-4">
-        <div class="text-center py-2">
-            © 2025 <strong>Inter Armureries®</strong>. Tous droits réservés.
-        </div>
+    <!-- Footer -->
+    <div class="flex">
+        <div class="w-[280px]"></div> <!-- espace gauche -->
 
-        <div class="flex justify-center space-x-4 py-2">
-            <a href="#" class="hover:underline">CGU</a>
-            <a href="#" class="hover:underline">Règlement</a>
-            <a href="#" class="hover:underline">Politique de protection</a>
-            <a href="#" class="hover:underline">À propos</a>
-            <a href="#" class="hover:underline">Contact</a>
-        </div>
-    </footer>
+        <footer class="flex-auto bg-black text-white text-sm mt-4 px-4">
+            <div class="text-center py-2">
+                © 2025 <strong>Inter Armureries®</strong>. Tous droits réservés.
+            </div>
+            <div class="flex justify-center space-x-4 py-2">
+                <a href="#" class="hover:underline">CGU</a>
+                <a href="#" class="hover:underline">Règlement</a>
+                <a href="#" class="hover:underline">Politique de protection</a>
+                <a href="#" class="hover:underline">À propos</a>
+                <a href="#" class="hover:underline">Contact</a>
+            </div>
+        </footer>
 
-    <div class="w-[280px]"></div> <!-- espace droit -->
-</div>
+        <div class="w-[280px]"></div> <!-- espace droit -->
+    </div>
 
-
-    <!-- Marquee animation -->
+    <!-- Animation défilement -->
     <style>
         @keyframes marquee {
             0% { transform: translateX(100%); }
@@ -90,6 +102,5 @@
             animation: marquee 15s linear infinite;
         }
     </style>
-
 </body>
 </html>

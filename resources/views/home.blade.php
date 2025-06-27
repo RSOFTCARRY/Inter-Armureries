@@ -17,8 +17,18 @@
 @section('content')
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         @foreach ($articles as $article)
-            <div class="bg-white shadow p-2 rounded border border-gray-200">
-                
+            <div class="bg-white shadow p-2 rounded border border-gray-200 relative">
+
+                {{-- Bouton favoris (statique pour l’instant) --}}
+                <div class="absolute top-2 right-2">
+                    <form method="POST" action="#">
+                        {{-- TODO : Ajouter une vraie route plus tard --}}
+                        <button type="button">
+                            <img src="{{ asset('icons/favorieBigEmpty.png') }}" alt="Ajouter aux favoris" class="w-6 h-6">
+                        </button>
+                    </form>
+                </div>
+
                 {{-- Image cliquable --}}
                 <a href="{{ route('articles.show', $article->id) }}">
                     <img src="{{ asset('storage/' . $article->image) }}" alt="{{ $article->nom }}" class="w-full h-40 object-contain">
