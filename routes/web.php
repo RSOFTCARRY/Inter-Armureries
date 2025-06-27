@@ -6,6 +6,7 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CartController;
 
 // Route vers la page d'accueil
 Route::get('/', [HomeController::class, 'index']);
@@ -24,3 +25,8 @@ Route::post('/articles', [ArticleController::class, 'store'])->name('articles.st
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
+
+Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
+

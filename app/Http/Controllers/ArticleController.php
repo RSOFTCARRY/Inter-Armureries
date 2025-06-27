@@ -30,4 +30,11 @@ class ArticleController extends Controller
 
         return redirect('/')->with('success', 'Article ajouté avec succès !');
     }
+
+        public function show($id)
+    {
+        $article = Article::findOrFail($id);
+        return view('articles.show', compact('article'));
+    }
+
 }
