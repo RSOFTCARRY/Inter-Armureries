@@ -7,32 +7,36 @@ use App\Models\Article;
 
 class CartController extends Controller
 {
-    public function add(Request $request, $id)
+    public function index()
     {
-        // On récupère l'article depuis la base
-        $article = Article::findOrFail($id);
-
-        // On récupère le panier actuel depuis la session, ou tableau vide
         $cart = session()->get('cart', []);
+        $articles = Article::findMany(array_keys($cart));
 
-        // Si l'article est déjà dans le panier, on incrémente la quantité
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
-        } else {
-            // Sinon, on l'ajoute
-            $cart[$id] = [
-                'id' => $article->id,
-                'nom' => $article->nom,
-                'photo' => $article->photo,
-                'prix' => $article->prix,
-                'quantity' => 1,
-            ];
-        }
+        return view('panier.index', compact('articles', 'cart'));
+    }
 
-        // On sauvegarde le panier dans la session
+    public function add($id)
+    {
+        $cart = session()->get('cart', []);
+        $cart[$id] = ($cart[$id] ?? 0) + 1;
+
         session()->put('cart', $cart);
 
-        // On peut rediriger ou afficher un message
-        return back()->with('success', 'Article ajouté au panier.');
+        return redirect()->back()->with('success', 'Article ajouté au panier');
+    }
+
+    public function remove($id)
+    {
+        $cart = session()->get('cart', []);
+        unset($cart[$id]);
+        session()->put('cart', $cart);
+
+        return redirect()->route('cart.index')->with('success', 'Article retiré du panier');
+    }
+
+    public function clear()
+    {
+        session()->forget('cart');
+        return redirect()->route('cart.index')->with('success', 'Panier vidé');
     }
 }

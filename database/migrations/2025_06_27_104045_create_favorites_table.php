@@ -6,25 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('favorites', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('article_id')->constrained()->onDelete('cascade');
-            $table->timestamps();
 
-            // Pour éviter les doublons d'une même relation
-            $table->unique(['user_id', 'article_id']);
+            $table->primary(['user_id', 'article_id']); // pour éviter les doublons
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('favorites');

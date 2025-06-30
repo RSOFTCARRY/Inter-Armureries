@@ -9,7 +9,7 @@
             @csrf
 
             <div class="mb-4">
-                <label class="block text-sm font-medium">Nom</label>
+                <label class="block text-sm font-medium">Raison Sociale</label>
                 <input type="text" name="name" value="{{ old('name') }}" required class="w-full mt-1 p-2 border rounded" />
                 @error('name')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>

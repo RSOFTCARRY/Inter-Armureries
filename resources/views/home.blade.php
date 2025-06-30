@@ -19,15 +19,30 @@
         @foreach ($articles as $article)
             <div class="bg-white shadow p-2 rounded border border-gray-200 relative">
 
-                {{-- Bouton favoris (statique pour l’instant) --}}
-                <div class="absolute top-2 right-2">
-                    <form method="POST" action="#">
-                        {{-- TODO : Ajouter une vraie route plus tard --}}
-                        <button type="button">
-                            <img src="{{ asset('icons/favorieBigEmpty.png') }}" alt="Ajouter aux favoris" class="w-6 h-6">
-                        </button>
-                    </form>
-                </div>
+                {{-- Bouton favoris dynamique --}}
+@auth
+    <div class="absolute top-2 right-2">
+        @if (auth()->user()->favoris->contains($article->id))
+            {{-- Déjà en favoris : bouton pour retirer --}}
+            <form method="POST" action="{{ route('favorites.destroy', $article->id) }}">
+                @csrf
+                @method('DELETE')
+                <button type="submit" title="Retirer des favoris">
+                    <img src="{{ asset('icons/favorieBigFull.png') }}" alt="Retirer des favoris" class="w-6 h-6">
+                </button>
+            </form>
+        @else
+            {{-- Pas encore en favoris : bouton pour ajouter --}}
+            <form method="POST" action="{{ route('favorites.store', $article->id) }}">
+                @csrf
+                <button type="submit" title="Ajouter aux favoris">
+                    <img src="{{ asset('icons/favorieBigEmpty.png') }}" alt="Ajouter aux favoris" class="w-6 h-6">
+                </button>
+            </form>
+        @endif
+    </div>
+@endauth
+
 
                 {{-- Image cliquable --}}
                 <a href="{{ route('articles.show', $article->id) }}">
@@ -45,6 +60,11 @@
                         {{ $article->description }}
                     </p>
                 </a>
+
+                <p class="text-sm text-gray-700 mt-1">
+                    Prix : <span class="font-semibold">{{ number_format($article->prix, 2, ',', ' ') }} €</span>
+                </p>
+
 
                 {{-- Formulaire pour ajouter au panier --}}
                 <form action="{{ route('cart.add', $article->id) }}" method="POST" class="mt-2">

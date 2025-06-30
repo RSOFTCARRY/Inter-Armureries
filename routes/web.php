@@ -10,7 +10,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\FavoriteController; // Ajouté
 
 // Page d'accueil
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Authentification
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -33,6 +33,16 @@ Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
 
 // Favoris - accessible uniquement si l'utilisateur est connecté
 Route::middleware(['auth'])->group(function () {
-    Route::post('/favorites/{article}', [FavoriteController::class, 'store'])->name('favorites.store');
-    Route::delete('/favorites/{article}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
+Route::post('/favorites/{article}', [FavoriteController::class, 'store'])->name('favorites.store');
+Route::delete('/favorites/{article}', [FavoriteController::class, 'destroy'])->name('favorites.destroy');
+Route::get('/favorites', [FavoriteController::class, 'index'])->name('favorites.index');
+
+
+
+// Panier
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
+Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+
 });

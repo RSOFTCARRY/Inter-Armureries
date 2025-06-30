@@ -27,10 +27,11 @@
 
     <!-- Navbar Noire -->
     <nav class="w-full bg-black text-white px-4 py-2 flex flex-wrap items-center justify-between">
-        <div class="flex items-center space-x-2">
-            <img src="{{ asset('images/logo-inter-armurerie.png') }}" alt="Logo Inter Armureries" class="h-8">
-            <span class="font-bold text-lg">Inter Armureries</span>
-        </div>
+        <a href="{{ route('home') }}" class="flex items-center space-x-2 hover:opacity-80">
+        <img src="{{ asset('images/logo-inter-armurerie.png') }}" alt="Logo Inter Armureries" class="h-8">
+        <span class="font-bold text-lg">Inter Armureries</span>
+        </a>
+
 
         <div class="flex items-center space-x-4">
             @guest
@@ -39,8 +40,12 @@
             @endguest
 
             @auth
+
+                <span class="hidden md:inline-block mr-4">
+                    Bonjour, {{ Auth::user()->raison_sociale ?? Auth::user()->name }}
+                </span>
                 <a href="{{ route('favorites.index') }}" class="hover:underline flex items-center">
-                    <img src="{{ asset('images/favorieBigFull.png') }}" alt="Favoris" class="w-6 h-6 mr-1">
+                    <img src="{{ asset('icons/favorieBigFull.png') }}" alt="Favoris" class="w-6 h-6 mr-1">
                     Mes Favoris
                 </a>
                 <form method="POST" action="{{ route('logout') }}">
@@ -48,6 +53,8 @@
                     <button type="submit" class="hover:underline">Déconnexion</button>
                 </form>
             @endauth
+
+            
         </div>
     </nav>
 
