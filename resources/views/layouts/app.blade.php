@@ -44,10 +44,25 @@
                 <span class="hidden md:inline-block mr-4">
                     Bonjour, {{ Auth::user()->raison_sociale ?? Auth::user()->name }}
                 </span>
+
+            @auth
+                <a href="{{ route('dashboard') }}" class="text-white hover:text-gray-300 px-3 py-2">Mon espace</a>
+            @endauth
+
+
+                
                 <a href="{{ route('favorites.index') }}" class="hover:underline flex items-center">
                     <img src="{{ asset('icons/favorieBigFull.png') }}" alt="Favoris" class="w-6 h-6 mr-1">
                     Mes Favoris
                 </a>
+
+                <a href="{{ route('cart.index') }}" class="flex items-center hover:text-green-400 px-3 py-2">
+                    <img src="{{ asset('icons/Iconecadie3-blanc.png') }}" alt="Panier" class="w-5 h-5 mr-1">
+                    Mon Panier
+                </a>
+
+                
+
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="hover:underline">Déconnexion</button>

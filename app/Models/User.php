@@ -11,6 +11,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    // Champs autorisés à la création/modification
     protected $fillable = [
         'name',
         'email',
@@ -19,24 +20,25 @@ class User extends Authenticatable
         'sia',
     ];
 
+    // Champs à cacher dans les tableaux/JSON
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    // Casts pour les attributs du modèle
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
 
     /**
-     * Relation avec les articles favoris.
+     * Relation many-to-many avec les articles favoris.
+     * La table pivot s'appelle 'favorites' ici (à vérifier dans ta BDD).
      */
     public function favoris()
     {
-        return $this->belongsToMany(Article::class, 'favorites');
+        // Si ta table pivot contient aussi des timestamps, ajoute ->withTimestamps()
+        return $this->belongsToMany(Article::class, 'favorites', 'user_id', 'article_id')->withTimestamps();
     }
 }
