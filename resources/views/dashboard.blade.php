@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@section('sidebar')
+    <nav class="space-y-2 text-sm">
+        <a href="{{ route('dashboard') }}" class="block py-1 hover:underline">Tableau de bord</a>
+        <a href="{{ route('favorites.index') }}" class="block py-1 hover:underline">Mes Favoris</a>
+        <a href="{{ route('cart.index') }}" class="block py-1 hover:underline">Mon Panier</a>
+        {{-- Ajoute ici d'autres liens si besoin --}}
+    </nav>
+@endsection
+
 @section('content')
 <div class="max-w-4xl mx-auto p-8">
     <h1 class="text-3xl font-bold mb-6">Bienvenue, {{ Auth::user()->name }} !</h1>
@@ -15,4 +24,11 @@
         </ul>
     </div>
 </div>
+@endsection
+
+@section('pubs')
+    {{-- Tu peux afficher ici des encarts publicitaires ou promos --}}
+    <div class="bg-gray-100 p-4 rounded shadow-sm text-sm">
+        <p><strong>Promo spéciale :</strong><br> -15% sur les holsters ce mois-ci !</p>
+    </div>
 @endsection
