@@ -8,35 +8,36 @@ use App\Models\Article;
 
 class FavoriteController extends Controller
 {
-    // Affiche la liste des favoris de l'utilisateur connecté
+    // Affiche la liste des articles favoris de l'utilisateur connecté
     public function index()
     {
         $user = Auth::user();
-        $favorites = $user->favoris()->with('favoris')->get();
-        // On récupère les articles favoris
+
+        // Récupère les articles favoris liés à l'utilisateur via la relation favoris
         $articles = $user->favoris()->get();
 
         return view('favorites.index', compact('articles'));
     }
 
     // Ajoute un article aux favoris
-    public function store($id)
+    public function store($articleId)
     {
         $user = Auth::user();
 
-        if (!$user->favoris()->where('article_id', $id)->exists()) {
-            $user->favoris()->attach($id);
+        // Vérifie si l'article n'est pas déjà en favoris pour éviter les doublons
+        if (!$user->favoris()->where('article_id', $articleId)->exists()) {
+            $user->favoris()->attach($articleId);
         }
 
         return redirect()->back()->with('success', 'Article ajouté aux favoris');
     }
 
     // Retire un article des favoris
-    public function destroy($id)
+    public function destroy($articleId)
     {
         $user = Auth::user();
 
-        $user->favoris()->detach($id);
+        $user->favoris()->detach($articleId);
 
         return redirect()->back()->with('success', 'Article retiré des favoris');
     }
