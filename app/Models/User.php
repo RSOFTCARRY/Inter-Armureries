@@ -11,34 +11,46 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    // Champs autorisés à la création/modification
     protected $fillable = [
         'name',
         'email',
         'password',
         'siret',
         'sia',
+        'responsable_nom',
+        'responsable_prenom',
+        'telephone_fixe',
+        'telephone_mobile',
+        'adresse_siege',
+        'autorisation_commerce',
+        'autorisation_commerce_date',
+        'afci',
+        'afci_date',
+        'diplome',
+        'diplome_date',
+        'agrement',
+        'agrement_date',
+        'kbis',
+        'kbis_date',
     ];
 
-    // Champs à cacher dans les tableaux/JSON
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    // Casts pour les attributs du modèle
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'autorisation_commerce_date' => 'date',
+        'afci_date' => 'date',
+        'diplome_date' => 'date',
+        'agrement_date' => 'date',
+        'kbis_date' => 'date',
     ];
 
-    /**
-     * Relation many-to-many avec les articles favoris.
-     * La table pivot s'appelle 'favorites' ici (à vérifier dans ta BDD).
-     */
     public function favoris()
     {
-        // Si ta table pivot contient aussi des timestamps, ajoute ->withTimestamps()
         return $this->belongsToMany(Article::class, 'favorites', 'user_id', 'article_id')->withTimestamps();
     }
 }

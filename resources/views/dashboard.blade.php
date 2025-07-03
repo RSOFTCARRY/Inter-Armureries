@@ -9,6 +9,12 @@
     </nav>
 @endsection
 
+<!-- Bouton pour ouvrir la modale -->
+<button type="button" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mb-4" data-bs-toggle="modal" data-bs-target="#ficheUserModal">
+    📝 Compléter / Mettre à jour ma fiche
+</button>
+
+
 @section('content')
 <div class="max-w-4xl mx-auto p-8">
     <h1 class="text-3xl font-bold mb-6">Bienvenue, {{ Auth::user()->name }} !</h1>
@@ -25,6 +31,12 @@
     </div>
 </div>
 @endsection
+
+<!-- Bouton pour ouvrir la modale -->
+<button type="button" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mb-4" data-bs-toggle="modal" data-bs-target="#ficheUserModal">
+    📝 Compléter / Mettre à jour ma fiche
+</button>
+
 
 @section('pubs')
     {{-- Tu peux afficher ici des encarts publicitaires ou promos --}}
