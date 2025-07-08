@@ -50,7 +50,7 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium">Nom de l’entreprise</label>
-                        <input type="text" name="raison_sociale" value="{{ Auth::user()->raison_sociale }}" readonly class="w-full border-gray-300 rounded bg-gray-100 text-gray-500">
+                        <input type="text" name="raison_sociale" value="{{ Auth::user()->name }}" readonly class="w-full border-gray-300 rounded bg-gray-100 text-gray-500">
                         <p class="text-sm text-gray-500 mt-1">Ce champ est automatiquement rempli à l'inscription.</p>
                     </div>
 
