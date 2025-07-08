@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+raison<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
@@ -28,10 +28,16 @@
     <!-- Navbar Noire -->
     <nav class="w-full bg-black text-white px-4 py-2 flex flex-wrap items-center justify-between">
         <a href="{{ route('home') }}" class="flex items-center space-x-2 hover:opacity-80">
-        <img src="{{ asset('images/logo-inter-armurerie.png') }}" alt="Logo Inter Armureries" class="h-8">
-        <span class="font-bold text-lg">Inter Armureries</span>
-        </a>
+            <img src="{{ asset('images/logo-inter-armurerie.png') }}" alt="Logo Inter Armureries" class="h-8">
+            <span class="font-bold text-lg">
+    @auth
+        {{ Auth::user()->raison_sociale ?? 'Inter Armureries' }}
+    @else
+        Inter Armureries
+    @endauth
+</span>
 
+        </a>
 
         <div class="flex items-center space-x-4">
             @guest
@@ -40,17 +46,12 @@
             @endguest
 
             @auth
-
                 <span class="hidden md:inline-block mr-4">
                     Bonjour, {{ Auth::user()->raison_sociale ?? Auth::user()->name }}
                 </span>
 
-            @auth
                 <a href="{{ route('dashboard') }}" class="text-white hover:text-gray-300 px-3 py-2">Mon espace</a>
-            @endauth
 
-
-                
                 <a href="{{ route('favorites.index') }}" class="hover:underline flex items-center">
                     <img src="{{ asset('icons/favorieBigFull.png') }}" alt="Favoris" class="w-6 h-6 mr-1">
                     Mes Favoris
@@ -61,15 +62,11 @@
                     Mon Panier
                 </a>
 
-                
-
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit" class="hover:underline">Déconnexion</button>
                 </form>
             @endauth
-
-            
         </div>
     </nav>
 
@@ -122,5 +119,6 @@
         }
     </style>
 
+    @stack('scripts')
 </body>
 </html>

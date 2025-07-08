@@ -1,51 +1,69 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Models;
 
-return new class extends Migration
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use App\Models\Article;
+
+class User extends Authenticatable
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('siret')->unique(); // Numéro de SIRET (obligatoire, unique)
-            $table->string('sia')->unique();   // Numéro de SIA (obligatoire, unique)
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
-
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
-
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
-        });
-    }
+    use HasFactory, Notifiable;
 
     /**
-     * Reverse the migrations.
+     * Champs autorisés à l’édition en masse.
      */
-    public function down(): void
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'siret',
+        'sia',
+        'raison_sociale',
+        'adresse',
+        'prenom',
+        'telephone_fixe',
+        'telephone_mobile',
+        'adresse_siege',
+        'doc_autorisation',
+        'validite_autorisation',
+        'doc_afci',
+        'validite_afci',
+        'doc_diplome',
+        'validite_diplome',
+        'doc_agrement',
+        'validite_agrement',
+        'doc_kbis',
+        'validite_kbis',
+    ];
+
+    /**
+     * Champs masqués dans les tableaux ou les JSON.
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * Conversion automatique des types.
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'validite_autorisation' => 'date',
+        'validite_afci' => 'date',
+        'validite_diplome' => 'date',
+        'validite_agrement' => 'date',
+        'validite_kbis' => 'date',
+    ];
+
+    /**
+     * Articles ajoutés en favoris par l’utilisateur.
+     */
+    public function favoris()
     {
-        Schema::dropIfExists('sessions');
-        Schema::dropIfExists('password_reset_tokens');
-        Schema::dropIfExists('users');
+        return $this->belongsToMany(Article::class, 'favorites', 'user_id', 'article_id')->withTimestamps();
     }
-};
+}

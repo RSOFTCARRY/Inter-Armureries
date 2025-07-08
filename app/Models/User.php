@@ -11,46 +11,70 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    /**
+     * Les attributs assignables en masse (mass assignable).
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'siret',
-        'sia',
-        'responsable_nom',
-        'responsable_prenom',
-        'telephone_fixe',
-        'telephone_mobile',
-        'adresse_siege',
-        'autorisation_commerce',
-        'autorisation_commerce_date',
-        'afci',
-        'afci_date',
-        'diplome',
-        'diplome_date',
-        'agrement',
-        'agrement_date',
-        'kbis',
-        'kbis_date',
+    'name',
+    'email',
+    'password',
+    'siret',
+    'sia',
+    'raison_sociale',            
+    'prenom',
+    'telephone_fixe',
+    'telephone_mobile',
+    'adresse_siege',
+    'doc_autorisation',
+    'validite_autorisation',
+    'doc_afci',
+    'validite_afci',
+    'doc_diplome',
+    'validite_diplome',
+    'doc_agrement',
+    'validite_agrement',
+    'doc_kbis',
+    'validite_kbis',
+
     ];
 
+    /**
+     * Les attributs cachés lors de la sérialisation.
+     *
+     * @var array<int, string>
+     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
+    /**
+     * Les casts pour la transformation automatique des attributs.
+     *
+     * @var array<string, string>
+     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'autorisation_commerce_date' => 'date',
-        'afci_date' => 'date',
-        'diplome_date' => 'date',
-        'agrement_date' => 'date',
-        'kbis_date' => 'date',
+
+        // Dates des documents
+        'validite_autorisation' => 'date',
+        'validite_afci' => 'date',
+        'validite_diplome' => 'date',
+        'validite_agrement' => 'date',
+        'validite_kbis' => 'date',
     ];
 
+    /**
+     * Relation favoris entre l'utilisateur et les articles.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function favoris()
     {
-        return $this->belongsToMany(Article::class, 'favorites', 'user_id', 'article_id')->withTimestamps();
+        return $this->belongsToMany(Article::class, 'favorites', 'user_id', 'article_id')
+                    ->withTimestamps();
     }
 }
