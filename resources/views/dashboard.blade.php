@@ -23,7 +23,7 @@
         </ul>
 
         <button onclick="document.getElementById('ficheModal').classList.remove('hidden')" class="bg-[#0D5037] text-white px-4 py-2 rounded hover:bg-green-700">
-            Compléter ma fiche utilisateur
+            Voir & Compléter ma fiche utilisateur
         </button>
     </div>
 </div>
