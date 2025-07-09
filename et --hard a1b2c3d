@@ -1,0 +1,19 @@
+[33m68adc12[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m)[m Plus rien ne fonctionne lors de l'enregistrement des modifications de la fiche utilisateur NON OK
+[33mc2b6144[m[33m ([m[1;31morigin/dev[m[33m)[m Modale utilisateur prénon s'enregistre mais pas les autres champs
+[33m7faa7e7[m Mise en place du nom de l'entreprise dans la modale de l'utilisateur
+[33mbd1afb0[m Correction du dashboard . le nom de l'entreprise se met à jour, reste à corriger le même probleme pour la modale
+[33m4f3a88c[m Proble de nom de raison sociale, impossible d'afficher l'utilisateur dans la fiche utilisateur et dans le dashboard
+[33m759a57a[m Début de la mise en place de la fiche utilisateur, Mise en place du bouton Complété/Mettre à jour ma fiche. Le bouton se met en haut de la page, à corriger
+[33m5680cda[m Rajout des liens "Mes Favoris" et "Mon Panier " dans la SideBar du Dashboard. ( la page "Mon Panier" ne fonctionne pas pour le moment)
+[33m8253744[m Récupération de la page "Favoris" Rectification de l'origine du layout ( modification au mauvais endroit de la NavBar) rajout de l'icone Caddie et du lien panier. Prochaine étape: Préparation du DashBoard, mise en place d'une modale pour voir le profil complet de l'utilisateur avec un bouton pour pouvoir modifier le profil en retournant dans le formulaire utilisateur
+[33m939bfcf[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m Mise en place des favoris ( ne fonctionne plus a cause des fiches produits) Création de la page fiche produits ( a cassé le liens vers les favoris, a corriger demain)
+[33me4b5915[m Mise en place du logo du site ans la NavBar
+[33m3a1039c[m icone favoris dans les vignette, création des pages articles et de la page favoris Rajout d'un bouton favoris dans la NavBar pour pointer sur la liste des favoris, bouton visible que si on est connecté.
+[33me19d7fa[m Les vignettes articles pointent vers la page article par la photo, le titre et la description courte
+[33m2dcd6eb[m formilaire inscription avec rajout SIRET et SIA, formulaire connexion, sur la page d'accueil perte des miniature articles avec photos
+[33m939d61f[m Register ok
+[33mf675376[m Page login fonctionnelle Page registeur non OK registerusercontroller non existant
+[33m9d37b53[m Matrice des pages, avec bandeau vert, navbar, colonne de gauche , colonne de droite, colonne centrale, footer aligné à la colonne centrale Emplacement de la sidebar à gauche et emplacement de l'encart publicitaire à gauche
+[33m481c5fc[m[33m ([m[1;31morigin/essai[m[33m)[m annule test
+[33m683c5ac[m test
+[33m3b4359b[m premier commit
