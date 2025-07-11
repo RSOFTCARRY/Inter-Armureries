@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\UserFicheController;
+// Note : si UserFicheController et FicheUtilisateurController font doublon, supprime l’un des deux
 use App\Http\Controllers\FicheUtilisateurController;
 
 /*
@@ -20,6 +21,9 @@ use App\Http\Controllers\FicheUtilisateurController;
 // Page d'accueil
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+// Conditions Générales d'Utilisation
+Route::get('/cgu', [HomeController::class, 'cgu'])->name('cgu');
+
 // Authentification
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'store']);
@@ -28,9 +32,8 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
-// Articles accessibles publiquement (lecture seule)
+// Article en lecture seule (public)
 Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -39,14 +42,17 @@ Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles
 */
 Route::middleware(['auth'])->group(function () {
 
-    // Dashboard
+    // Tableau de bord
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Gestion de la fiche utilisateur
+    // Fiche utilisateur (édition)
     Route::get('/user/fiche/edit', [UserFicheController::class, 'edit'])->name('user.fiche.edit');
     Route::put('/user/fiche/update', [UserFicheController::class, 'update'])->name('user.fiche.update');
 
-    // Gestion des articles (création, modification, suppression)
+    // Documents complémentaires (upload, dates, etc.)
+    Route::post('/fiche-utilisateur', [FicheUtilisateurController::class, 'update'])->name('fiche-utilisateur.update');
+
+    // Gestion des articles (admin)
     Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
     Route::post('/articles', [ArticleController::class, 'store'])->name('articles.store');
 
@@ -60,13 +66,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
     Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
-    Route::post('/fiche-utilisateur', [FicheUtilisateurController::class, 'update'])->name('fiche-utilisateur.update');
-
 });
 
 /*
 |--------------------------------------------------------------------------
-| Route fallback pour gérer les URL non définies (optionnel)
+| Route fallback (pour 404 personnalisée) – optionnelle
 |--------------------------------------------------------------------------
 */
 // Route::fallback(function () {

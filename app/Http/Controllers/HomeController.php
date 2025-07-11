@@ -12,4 +12,9 @@ class HomeController extends Controller
         $articles = Article::latest()->take(9)->get(); // ou tous si tu préfères
         return view('home', compact('articles'));
     }
+    public function cgu()
+    {
+        return view('pages.cgu');
+    }
+
 }
