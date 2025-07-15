@@ -97,10 +97,10 @@ raison<!DOCTYPE html>
             © 2025 <strong>Inter Armureries®</strong>. Tous droits réservés.
         </div>
         <div class="flex flex-wrap justify-center gap-4 py-2">
-            <a href="#" class="hover:underline">CGU</a>
-            <a href="#" class="hover:underline">Règlement</a>
-            <a href="#" class="hover:underline">Politique de protection</a>
-            <a href="#" class="hover:underline">À propos</a>
+            <a href="{{ route('cgu') }}">CGU</a>
+            <a href="{{ route('reglement') }}">Règlement</a>
+            <a href="{{ route('protection') }}">Politique de protection</a>
+            <a href="{{ route('a-propos') }}">À propos</a>
             <a href="#" class="hover:underline">Contact</a>
         </div>
     </footer>

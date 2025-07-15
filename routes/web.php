@@ -62,6 +62,20 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
     Route::post('/fiche-utilisateur', [FicheUtilisateurController::class, 'update'])->name('fiche-utilisateur.update');
 
+    //CGU
+    Route::get('/cgu', function () {return view('cgu');})->name('cgu');
+
+    // Règlement
+    Route::get('/reglement', function () {return view('reglement');})->name('reglement');
+
+    //Politique de protection
+    Route::get('/protection', function () {return view('protection');})->name('protection');
+
+    // A Propos
+    Route::get('/a-propos', function () {return view('a-propos');})->name('a-propos');
+
+    // Contact
+
 });
 
 /*
