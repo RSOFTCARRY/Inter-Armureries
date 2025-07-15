@@ -1,4 +1,4 @@
-raison<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
@@ -30,13 +30,12 @@ raison<!DOCTYPE html>
         <a href="{{ route('home') }}" class="flex items-center space-x-2 hover:opacity-80">
             <img src="{{ asset('images/logo-inter-armurerie.png') }}" alt="Logo Inter Armureries" class="h-8">
             <span class="font-bold text-lg">
-    @auth
-        {{ Auth::user()->raison_sociale ?? 'Inter Armureries' }}
-    @else
-        Inter Armureries
-    @endauth
-</span>
-
+                @auth
+                    {{ Auth::user()->raison_sociale ?: 'Inter Armureries' }}
+                @else
+                    Inter Armureries
+                @endauth
+            </span>
         </a>
 
         <div class="flex items-center space-x-4">
@@ -47,7 +46,7 @@ raison<!DOCTYPE html>
 
             @auth
                 <span class="hidden md:inline-block mr-4">
-                    Bonjour, {{ Auth::user()->raison_sociale ?? Auth::user()->name }}
+                    Bonjour, {{ Auth::user()->raison_sociale ?: Auth::user()->name }}
                 </span>
 
                 <a href="{{ route('dashboard') }}" class="text-white hover:text-gray-300 px-3 py-2">Mon espace</a>
@@ -111,7 +110,6 @@ raison<!DOCTYPE html>
             0% { transform: translateX(100%); }
             100% { transform: translateX(-100%); }
         }
-
         .animate-marquee {
             display: inline-block;
             white-space: nowrap;
