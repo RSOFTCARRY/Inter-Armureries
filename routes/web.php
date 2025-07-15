@@ -9,8 +9,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\UserFicheController;
-// Note : si UserFicheController et FicheUtilisateurController font doublon, supprime l’un des deux
 use App\Http\Controllers\FicheUtilisateurController;
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +34,10 @@ Route::post('/register', [RegisteredUserController::class, 'store']);
 
 // Article en lecture seule (public)
 Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
+
+// Formulaire de contact (accessible sans connexion)
+Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 /*
 |--------------------------------------------------------------------------
@@ -66,29 +70,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');
     Route::delete('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
     Route::delete('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
-    Route::post('/fiche-utilisateur', [FicheUtilisateurController::class, 'update'])->name('fiche-utilisateur.update');
 
-    //CGU
-    Route::get('/cgu', function () {return view('cgu');})->name('cgu');
-
-    // Règlement
-    Route::get('/reglement', function () {return view('reglement');})->name('reglement');
-
-    //Politique de protection
-    Route::get('/protection', function () {return view('protection');})->name('protection');
-
-    // A Propos
-    Route::get('/a-propos', function () {return view('a-propos');})->name('a-propos');
-
-    // Contact
-
+    // Pages informatives accessibles uniquement aux connectés
+    Route::get('/reglement', fn () => view('reglement'))->name('reglement');
+    Route::get('/protection', fn () => view('protection'))->name('protection');
+    Route::get('/a-propos', fn () => view('a-propos'))->name('a-propos');
 });
 
-/*
-|--------------------------------------------------------------------------
-| Route fallback (pour 404 personnalisée) – optionnelle
-|--------------------------------------------------------------------------
-*/
+// Route fallback (pour 404 personnalisée) – optionnelle
 // Route::fallback(function () {
 //     return response()->view('errors.404', [], 404);
 // });

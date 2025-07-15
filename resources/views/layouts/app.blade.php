@@ -100,7 +100,8 @@
             <a href="{{ route('reglement') }}">Règlement</a>
             <a href="{{ route('protection') }}">Politique de protection</a>
             <a href="{{ route('a-propos') }}">À propos</a>
-            <a href="#" class="hover:underline">Contact</a>
+            <!-- Changement ici : lien direct au lieu de route('contact') -->
+            <a href="/contact">Contact</a>
         </div>
     </footer>
 
