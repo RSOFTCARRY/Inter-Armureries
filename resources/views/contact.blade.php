@@ -47,6 +47,12 @@
             <textarea name="message" id="message" rows="5" class="form-control" required>{{ old('message') }}</textarea>
         </div>
 
+        <div class="mb-3">
+            <label for="fichier" class="form-label">Joindre un fichier (facultatif)</label>
+            <input type="file" name="fichier" id="fichier" class="form-control">
+        </div>
+
+
         <button type="submit" class="btn btn-primary">Envoyer</button>
     </form>
 </div>
