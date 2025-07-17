@@ -5,26 +5,56 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Article;
+use App\Models\Categorie;
 
 class FavoriteController extends Controller
 {
-    // Affiche la liste des articles favoris de l'utilisateur connecté
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
 
-        // Récupère les articles favoris liés à l'utilisateur via la relation favoris
-        $articles = $user->favoris()->get();
+        // Récupération des filtres de la requête
+        $categorieId = $request->input('categorie');
+        $prixMin = $request->input('prix_min');
+        $prixMax = $request->input('prix_max');
+        $triPrix = $request->input('tri_prix');
 
-        return view('favorites.index', compact('articles'));
+        // On récupère tous les favoris de l'utilisateur (base de départ)
+        $query = $user->favoris();
+
+        // Appliquer les filtres si présents
+        if ($categorieId) {
+            $query->where('categorie_id', $categorieId);
+        }
+
+        if ($prixMin !== null) {
+            $query->where('prix', '>=', $prixMin);
+        }
+
+        if ($prixMax !== null) {
+            $query->where('prix', '<=', $prixMax);
+        }
+
+        // Appliquer le tri si spécifié
+        if ($triPrix === 'asc') {
+            $query->orderBy('prix', 'asc');
+        } elseif ($triPrix === 'desc') {
+            $query->orderBy('prix', 'desc');
+        }
+
+        // Récupérer les articles filtrés
+        $articles = $query->get();
+
+        // Récupérer toutes les catégories pour l'affichage du filtre
+        $categories = Categorie::all();
+
+        return view('favorites.index', compact('articles', 'categories'));
     }
 
-    // Ajoute un article aux favoris
     public function store($articleId)
     {
         $user = Auth::user();
 
-        // Vérifie si l'article n'est pas déjà en favoris pour éviter les doublons
         if (!$user->favoris()->where('article_id', $articleId)->exists()) {
             $user->favoris()->attach($articleId);
         }
@@ -32,11 +62,9 @@ class FavoriteController extends Controller
         return redirect()->back()->with('success', 'Article ajouté aux favoris');
     }
 
-    // Retire un article des favoris
     public function destroy($articleId)
     {
         $user = Auth::user();
-
         $user->favoris()->detach($articleId);
 
         return redirect()->back()->with('success', 'Article retiré des favoris');

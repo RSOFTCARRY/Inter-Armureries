@@ -18,14 +18,15 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Test User',
                 'siret' => '12345678900000',
-                'sia' => 'FR123456789', // <- Champ ajouté ici
+                'sia' => 'FR123456789',
                 'password' => bcrypt('password'),
             ]
         );
 
-        // Exécute le seeder des articles
+        // Exécute les seeders
         $this->call([
             ArticleSeeder::class,
+            CategoriesTableSeeder::class, // ✅ Ajout ici
         ]);
     }
 }

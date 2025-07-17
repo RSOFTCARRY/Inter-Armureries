@@ -19,4 +19,10 @@ class Article extends Model
     {
         return $this->belongsToMany(User::class, 'favorites', 'article_id', 'user_id')->withTimestamps();
     }
+
+    public function categorie()
+    {
+        return $this->belongsTo(Categorie::class);
+    }
+
 }
