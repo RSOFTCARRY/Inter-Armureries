@@ -4,7 +4,7 @@
 
     <form method="GET" action="{{ url()->current() }}" class="space-y-4">
 
-        {{-- Catégories (si $categories est fourni) --}}
+        {{-- Filtre par catégorie --}}
         <div>
             <label for="categorie" class="block text-sm font-medium">Catégorie</label>
             <select name="categorie" id="categorie" class="w-full mt-1 p-2 border border-gray-300 rounded">
@@ -17,7 +17,7 @@
             </select>
         </div>
 
-        {{-- Prix minimum --}}
+        {{-- Filtre par prix minimum --}}
         <div>
             <label for="prix_min" class="block text-sm font-medium">Prix minimum (€)</label>
             <input type="number" name="prix_min" id="prix_min" min="0" step="0.01"
@@ -25,7 +25,7 @@
                    class="w-full mt-1 p-2 border border-gray-300 rounded">
         </div>
 
-        {{-- Prix maximum --}}
+        {{-- Filtre par prix maximum --}}
         <div>
             <label for="prix_max" class="block text-sm font-medium">Prix maximum (€)</label>
             <input type="number" name="prix_max" id="prix_max" min="0" step="0.01"
@@ -35,15 +35,15 @@
 
         {{-- Tri par prix --}}
         <div>
-            <label for="tri" class="block text-sm font-medium">Trier par prix</label>
-            <select name="tri" id="tri" class="w-full mt-1 p-2 border border-gray-300 rounded">
+            <label for="tri_prix" class="block text-sm font-medium">Trier par prix</label>
+            <select name="tri_prix" id="tri_prix" class="w-full mt-1 p-2 border border-gray-300 rounded">
                 <option value="">-- Aucun tri --</option>
-                <option value="asc" {{ request('tri') === 'asc' ? 'selected' : '' }}>Prix croissant</option>
-                <option value="desc" {{ request('tri') === 'desc' ? 'selected' : '' }}>Prix décroissant</option>
+                <option value="asc" {{ request('tri_prix') === 'asc' ? 'selected' : '' }}>Prix croissant</option>
+                <option value="desc" {{ request('tri_prix') === 'desc' ? 'selected' : '' }}>Prix décroissant</option>
             </select>
         </div>
 
-        {{-- Bouton de filtre --}}
+        {{-- Bouton pour appliquer les filtres --}}
         <button type="submit"
                 class="w-full bg-green-700 text-white py-2 rounded hover:bg-green-800">
             Appliquer les filtres
