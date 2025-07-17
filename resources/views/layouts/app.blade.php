@@ -74,7 +74,8 @@
 
         <!-- Colonne gauche (Sidebar) -->
 <aside class="w-[280px] bg-white p-4 flex justify-center">
-    @if (request()->routeIs('home'))
+    @if (request()->routeIs('home') || request()->routeIs('favorites.index') || request()->routeIs('cart.index'))
+
         {{-- Sidebar blanche spécifique à la page d’accueil --}}
         @include('components.sidebar-blanche')
     @else
