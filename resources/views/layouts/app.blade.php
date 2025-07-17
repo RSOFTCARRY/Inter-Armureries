@@ -73,11 +73,18 @@
     <div class="flex flex-grow w-full">
 
         <!-- Colonne gauche (Sidebar) -->
-        <aside class="w-[280px] bg-white p-4 flex justify-center">
-            <div class="w-full max-w-[240px] bg-black text-white p-4 rounded">
-                @yield('sidebar')
-            </div>
-        </aside>
+<aside class="w-[280px] bg-white p-4 flex justify-center">
+    @if (request()->routeIs('home'))
+        {{-- Sidebar blanche spécifique à la page d’accueil --}}
+        @include('components.sidebar-blanche')
+    @else
+        {{-- Sidebar noire pour les autres pages --}}
+        <div class="w-full max-w-[240px] bg-black text-white p-4 rounded">
+            @yield('sidebar')
+        </div>
+    @endif
+</aside>
+
 
         <!-- Colonne centrale -->
         <main class="flex-auto px-4 py-6">
